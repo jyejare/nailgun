@@ -427,7 +427,8 @@ class PathTestCase(TestCase):
                 (entities.Repository, 'upload_content'),
                 (entities.RHCIDeployment, 'deploy'),
                 (entities.SmartProxy, 'refresh'),
-                (entities.VirtWhoConfig, 'deploy_script')
+                (entities.VirtWhoConfig, 'deploy_script'),
+                (entities.VirtWhoConfig, 'configs')
         ):
             with self.subTest((entity, which)):
                 with self.assertRaises(NoSuchPathError):
@@ -4054,7 +4055,7 @@ class VirtWhoConfigTestCase(TestCase):
     def test_create(self):
         org = entities.Organization(self.cfg, name='vhorg', id=2)
         vh = entities.VirtWhoConfig(server_config=self.cfg, name='vhtest1',
-                                    organization=org,
+                                    organization_id=org.id,
                                     filtering_mode=1,
                                     whitelist='*.example.com',
                                     proxy='proxy.example.com',
@@ -4090,7 +4091,7 @@ class VirtWhoConfigTestCase(TestCase):
     def test_update(self):
         org = entities.Organization(self.cfg, name='vhorg', id=2)
         vh = entities.VirtWhoConfig(server_config=self.cfg, name='vhtest1',
-                                    organization=org,
+                                    organization_id=org.id,
                                     filtering_mode=1,
                                     whitelist='*.example.com',
                                     proxy='proxy.example.com',
